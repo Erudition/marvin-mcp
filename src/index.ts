@@ -7,12 +7,13 @@ const port = 3000;
 
 app.post('/mcp', async (req, res) => {
   const apiToken = req.headers['x-api-token'] as string;
-  if (!apiToken) {
+  const fullAccessToken = req.headers['x-full-access-token'] as string;
+  if (!apiToken || !fullAccessToken) {
     res.status(401).send('Unauthorized');
     return;
   }
 
-  const server = createServer(apiToken);
+  const server = createServer(apiToken, fullAccessToken);
 
   const transport = new StreamableHTTPServerTransport({
     sessionIdGenerator: undefined,
