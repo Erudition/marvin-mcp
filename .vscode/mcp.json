@@ -1,0 +1,26 @@
+{
+  "servers": {
+    "marvin": {
+      "type": "http",
+      "url": "http://127.0.0.1:3000/mcp",
+      "headers": {
+        "X-API-Token": "${input:marvin-api-token}",
+        "X-Full-Access-Token": "${input:marvin-full-access-token}"
+      }
+    }
+  },
+  "inputs": [
+    {
+      "id": "marvin-api-token",
+      "type": "promptString",
+      "description": "Enter your Amazing Marvin Read-Only API Token",
+      "password": true
+    },
+    {
+      "id": "marvin-full-access-token",
+      "type": "promptString",
+      "description": "Enter your Amazing Marvin Full Access Token",
+      "password": true
+    }
+  ]
+}
