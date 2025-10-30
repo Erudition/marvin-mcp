@@ -5,6 +5,8 @@ The goal of this project is to build a Model Context Protocol (MCP) server for t
 ## Execution Guidelines
 **MCP Development Note:** The `resources/` directory contains local clones of the MCP specification, example servers, and the TypeScript SDK. Always consult these local resources as the primary source of truth before making changes to the MCP server implementation.
 
+When new tools have been added, you won't be able to access them until you run the VS Code "Restart MCP Connection" command. Do this proactively after adding new tools.
+
 **Terminal Execution Note:** When running a background process (like a development server) and a subsequent command (like a test), combine them into a single `run_in_terminal` call using `&` to ensure the background process is not terminated. For example: `npm start & sleep 5 && curl ...`
 
 PROGRESS TRACKING:
