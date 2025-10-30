@@ -1,5 +1,3 @@
-<!-- Use this file to provide workspace-specific custom instructions to Copilot. For more details, visit https://code.visualstudio.com/docs/copilot/copilot-customization#_use-a-githubcopilotinstructionsmd-file -->
-
 ## Project Description
 The goal of this project is to build a Model Context Protocol (MCP) server for the task management application "Amazing Marvin". The server should be written in TypeScript and use the official `@modelcontextprotocol/sdk`. It will expose tools that correspond to the Amazing Marvin API, allowing a conversational AI to interact with a user's Marvin data. The server should be robust, well-typed, and follow the code style guidelines outlined in this document.
 
