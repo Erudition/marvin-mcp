@@ -5,7 +5,7 @@
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
-    "start": "tsc-watch --onSuccess \"ts-node src/index.ts\"",
+    "start": "tsc-watch --onSuccess \"node --loader ts-node/esm src/index.ts\"",
     "build": "tsc",
     "serve": "node dist/index.js"
   },
