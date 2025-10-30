@@ -1,11 +1,19 @@
 import express from 'express';
-import { server } from './tools.js';
+import { createServer } from './tools.js';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 
 const app = express();
 const port = 3000;
 
 app.post('/mcp', async (req, res) => {
+  const apiToken = req.headers['x-api-token'] as string;
+  if (!apiToken) {
+    res.status(401).send('Unauthorized');
+    return;
+  }
+
+  const server = createServer(apiToken);
+
   const transport = new StreamableHTTPServerTransport({
     sessionIdGenerator: undefined,
     enableJsonResponse: true,
@@ -16,12 +24,7 @@ app.post('/mcp', async (req, res) => {
   });
 
   await server.connect(transport);
-  await transport.handleRequest(req, res, {
-    headers: {
-      apiToken: req.headers['x-api-token'] as string,
-      fullAccessToken: req.headers['x-full-access-token'] as string,
-    }
-  });
+  await transport.handleRequest(req, res);
 });
 
 app.listen(port, '0.0.0.0', () => {
