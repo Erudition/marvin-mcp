@@ -1,24 +1,24 @@
-# Use an official Node.js runtime as a parent image
-FROM node:18-alpine
-
-# Set the working directory in the container
+# ---- Base Stage ----
+FROM node:18-alpine AS base
 WORKDIR /usr/src/app
-
-# Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
 
-# Install any needed packages
-# Using --omit=dev to not install devDependencies in production
-RUN npm install --omit=dev
+# ---- Dependencies Stage ----
+FROM base AS dependencies
+RUN npm install
 
-# Bundle app source
+# ---- Build Stage ----
+FROM dependencies AS build
 COPY . .
-
-# Build the TypeScript code
 RUN npm run build
 
-# Make port 3000 available to the world outside this container
-EXPOSE 3000
+# ---- Production Stage ----
+FROM base AS production
+ENV NODE_ENV=production
+# Copy production node_modules
+COPY --from=dependencies /usr/src/app/node_modules ./node_modules
+# Copy built application
+COPY --from=build /usr/src/app/dist ./dist
 
-# Define the command to run the app
+EXPOSE 3000
 CMD [ "node", "dist/index.js" ]
