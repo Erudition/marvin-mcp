@@ -194,7 +194,7 @@ export const createServer = (apiToken: string, fullAccessToken: string) => {
   server.registerTool(
     'getDueItems',
     {
-      description: 'Gets open tasks and projects that are due.',
+      description: 'Gets open tasks and projects that are due today, or earlier.',
       inputSchema: GetDueItemsSchema.shape,
     },
     async (params) => {
