@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "8231:3000"
     environment:
       - MARVIN_API_TOKEN=${MARVIN_API_TOKEN}
       - MARVIN_FULL_ACCESS_TOKEN=${MARVIN_FULL_ACCESS_TOKEN}
