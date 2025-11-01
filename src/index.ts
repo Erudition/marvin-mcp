@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import { createServer } from './tools.js';
@@ -22,11 +23,15 @@ app.use((req, res, next) => {
 });
 
 app.post('/mcp', async (req, res) => {
-  const apiToken = req.headers['x-api-token'] as string;
-  const fullAccessToken = req.headers['x-full-access-token'] as string;
+  let apiToken = process.env.MARVIN_API_TOKEN || req.headers['x-api-token'] as string;
+  const authHeader = req.headers.authorization;
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    apiToken = authHeader.substring(7);
+  }
+  const fullAccessToken = process.env.MARVIN_FULL_ACCESS_TOKEN || req.headers['x-full-access-token'] as string;
   if (!apiToken || !fullAccessToken) {
-    console.error('Authorization failed: Missing x-api-token or x-full-access-token header');
-    res.status(401).send('Unauthorized');
+    console.error('Authorization failed: Missing API token or full access token.');
+    res.status(401).send('Unauthorized. Provide API tokens via environment variables (MARVIN_API_TOKEN, MARVIN_FULL_ACCESS_TOKEN) or headers ("x-api-token", "x-full-access-token", or "Authorization: Bearer <token>").');
     return;
   }
   console.log('Authentication successful.');
